@@ -1,3 +1,4 @@
+from dotenv import load_dotenv
 from core.validation import get_valid_image_number, validate_image
 from core.functions import resize_image
 import cv2 as cv
@@ -5,9 +6,12 @@ import numpy as np
 import os
 
 
+# Load variables from .env file
+load_dotenv()
+
 # Base Path for image folder
-base_img_folder: str = "/home/renato/Pictures/PIBIC/FinalImage/"
-base_mask_folder: str = "/home/renato/Pictures/PIBIC/FinalImagePPM_Mask/"
+base_img_folder: str = os.getenv("BASE_IMG_FOLDER")
+base_mask_folder: str = os.getenv("BASE_MASK_FOLDER")
 
 # Choose image for treatment
 img_number: str = get_valid_image_number()

@@ -26,4 +26,5 @@ Make sure you have the following prerequisites installed in your environment:
     ```
 
 ## Setup
-1. Change the path for base_img_folder and base_mask_folder for now.
+1. Create a .env file using the .env.example;
+2. Type the path for base_img_folder and base_mask_folder at .env file.
