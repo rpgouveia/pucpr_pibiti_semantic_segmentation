@@ -1,6 +1,6 @@
 from dotenv import load_dotenv
 from core.validation import get_valid_image_number, validate_image
-from core.functions import resize_image
+from core.functions import resize_image, filter_color_and_save
 import cv2 as cv
 import numpy as np
 import os
@@ -12,6 +12,7 @@ load_dotenv()
 # Base Path for image folder
 base_img_folder: str = os.getenv("BASE_IMG_FOLDER")
 base_mask_folder: str = os.getenv("BASE_MASK_FOLDER")
+output_folder: str = os.getenv("OUTPUT_FOLDER")
 
 # Choose image for treatment
 img_number: str = get_valid_image_number()
@@ -39,4 +40,17 @@ cv.imshow("Image and Mask Side by Side", combined_image)
 cv.waitKey(0)
 
 # Close all windows
+cv.destroyAllWindows()
+
+# Filter Process
+# Path to save the new image
+output_image_path = os.path.join(output_folder, f"{img_number}_filtered.png")
+
+# Filter the red color (in BGR format: [0, 0, 255])
+red_color_bgr = [0, 0, 255]
+filtered_image = filter_color_and_save(mask, red_color_bgr, output_image_path)
+
+# Show the filtered image to the user
+cv.imshow("Filtered Image", filtered_image)
+cv.waitKey(0)
 cv.destroyAllWindows()
