@@ -1,3 +1,4 @@
+from core.colors import colors_rgb
 import numpy as np
 import cv2 as cv
 
@@ -21,39 +22,31 @@ def resize_image(img: np.ndarray) -> np.ndarray:
     return resized_image
 
 
-def filter_color_and_save(mask: np.ndarray, color_bgr: list[int], output_path: str) -> np.ndarray:
-    """
-    Filters out elements of a specific color in a mask and saves the result as a new image.
+# Função para converter RGB para HSV
+def rgb_to_hsv(rgb):
+    rgb = np.uint8([[rgb]])
+    hsv = cv.cvtColor(rgb, cv.COLOR_RGB2HSV)
+    return hsv[0][0]
 
-    This function converts the mask image to the HSV color space and applies a filter to keep 
-    only the elements of the specified color. The filtered elements are preserved on a black 
-    background in the output image.
 
-    Parameters:
-        mask (np.ndarray): The input mask image in BGR format.
-        color_bgr (list[int]): The target color to filter in BGR format (e.g., [0, 0, 255] for red).
-        output_path (str): The path to save the output image.
+def filter_color_and_save(img, element, img_number, output_folder):
+    # Converter o dicionário de cores RGB para HSV
+    colors_hsv = {k: (rgb_to_hsv(v[0]), v[1]) for k, v in colors_rgb.items()}
 
-    Returns:
-        np.ndarray: The output image with the filtered color elements on a black background.
-    """
+    # Carregar a imagem
+    hsv_image = cv.cvtColor(img, cv.COLOR_BGR2HSV)
 
-    # Convert mask to HSV
-    hsv_mask = cv.cvtColor(mask, cv.COLOR_BGR2HSV)
+    # Encontrar a cor correspondente ao elemento
+    for color_name, (hsv, elements) in colors_hsv.items():
+        if element in elements:
+            lower_bound = hsv - np.array([10, 100, 100])
+            upper_bound = hsv + np.array([10, 255, 255])
+            mask = cv.inRange(hsv_image, lower_bound, upper_bound)
+            filtered_image = cv.bitwise_and(img, img, mask=mask)
 
-    # Define lower and upper bounds based on the target color
-    lower_bound = np.array([color_bgr[0] - 10, 100, 100])
-    upper_bound = np.array([color_bgr[0] + 10, 255, 255])
+            # Criar o caminho de saída com o número da imagem e a descrição
+            output_path = f"{output_folder}{img_number}_{element.replace(' ', '_').lower()}.png"
+            cv.imwrite(output_path, filtered_image)
+            return output_path, filtered_image
 
-    # Create a binary mask for the color range
-    color_mask = cv.inRange(hsv_mask, lower_bound, upper_bound)
-
-    # Create the output image with the color elements on a black background
-    output_image = cv.bitwise_and(mask, mask, mask=color_mask)
-
-    # Convert non-color elements to black
-    output_image[color_mask == 0] = [0, 0, 0]
-
-    # Save the output image
-    cv.imwrite(output_path, output_image)
-    return output_image
+    return None

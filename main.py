@@ -1,6 +1,8 @@
 from dotenv import load_dotenv
 from core.validation import get_valid_image_number, validate_image
 from core.image_manipulation import resize_image, filter_color_and_save
+from core.colors import colors_rgb
+from core.utils import print_colors_dict
 import cv2 as cv
 import numpy as np
 import os
@@ -47,14 +49,17 @@ cv.destroyAllWindows()
 
 
 ### Filter Process ###
-# Path to save the new image
-output_image_path = os.path.join(output_folder, f"{img_number}_filtered.png")
-
-# Filter the red color (in BGR format: [0, 0, 255])
-red_color_bgr = [0, 0, 255]
-filtered_image = filter_color_and_save(mask, red_color_bgr, output_image_path)
+print("\nColors and Elements:")
+print_colors_dict(colors_rgb)
+element: str = input("Type the element from the list: ")
+result = filter_color_and_save(mask, element, img_number, output_folder)
 
 # Show the filtered image to the user
-cv.imshow("Filtered Image", filtered_image)
-cv.waitKey(0)
-cv.destroyAllWindows()
+if result:
+    output_path, filtered_image = result
+    cv.imshow("Filtered Image", filtered_image)
+    cv.waitKey(0)
+    cv.destroyAllWindows()
+    print(f"Image saved at: {output_path}")
+else:
+    print("Element not found in the mask.")
