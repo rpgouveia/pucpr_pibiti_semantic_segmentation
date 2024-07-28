@@ -1,4 +1,4 @@
-# Dicionário de cores em RGB e seus elementos correspondentes
+# Dictionary of RGB colors and their corresponding elements
 colors_rgb = {
     'Red': ([255, 0, 0], 'Passerby'),
     'Yellow': ([255, 255, 0], 'Buildings'),
