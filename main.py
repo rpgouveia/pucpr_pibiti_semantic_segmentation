@@ -1,11 +1,12 @@
 from dotenv import load_dotenv
 from core.validation import get_valid_image_number, validate_image
-from core.functions import resize_image, filter_color_and_save
+from core.image_manipulation import resize_image, filter_color_and_save
 import cv2 as cv
 import numpy as np
 import os
 
 
+### Setup ###
 # Load variables from .env file
 load_dotenv()
 
@@ -14,6 +15,8 @@ base_img_folder: str = os.getenv("BASE_IMG_FOLDER")
 base_mask_folder: str = os.getenv("BASE_MASK_FOLDER")
 output_folder: str = os.getenv("OUTPUT_FOLDER")
 
+
+### Image and Mask Presentation ###
 # Choose image for treatment
 img_number: str = get_valid_image_number()
 img_path: str = os.path.join(base_img_folder, f"{img_number}.png")
@@ -42,7 +45,8 @@ cv.waitKey(0)
 # Close all windows
 cv.destroyAllWindows()
 
-# Filter Process
+
+### Filter Process ###
 # Path to save the new image
 output_image_path = os.path.join(output_folder, f"{img_number}_filtered.png")
 
