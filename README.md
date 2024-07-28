@@ -6,7 +6,7 @@ Please follow these steps to use this tool.
 
 ## Prerequisites
 Make sure you have the following prerequisites installed in your environment:
-- Python (versão 3.12.4 ou superior): [Download Python](https://www.python.org/downloads/)
+- Python (version 3.12.4 or superior): [Download Python](https://www.python.org/downloads/)
 - Anaconda 3: [Download Anaconda](https://www.anaconda.com/download)
 - Images and Masks
 

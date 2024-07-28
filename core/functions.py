@@ -20,6 +20,7 @@ def resize_image(img: np.ndarray) -> np.ndarray:
     resized_image: np.ndarray = cv.resize(img, dim, interpolation=cv.INTER_AREA)
     return resized_image
 
+
 def filter_color_and_save(mask: np.ndarray, color_bgr: list[int], output_path: str) -> np.ndarray:
     """
     Filters out elements of a specific color in a mask and saves the result as a new image.
