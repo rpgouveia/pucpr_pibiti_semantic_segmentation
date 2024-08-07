@@ -5,35 +5,35 @@ import os
 
 
 def process_image(image_path, output_folder, img_number):
-    # Carregar a imagem
+    # Load image
     image = cv.imread(image_path, cv.IMREAD_GRAYSCALE)
     
-    # Verificar se a imagem foi carregada corretamente
+    # Check image
     if image is None:
         print(f"Erro ao carregar a imagem: {image_path}")
         return
     
-    # Obter as dimensões da imagem
+    # Get image dimensions
     height, width = image.shape
     
-    # Inicializar a lista para armazenar as camadas
+    # Setup a list for layers
     layers = []
     
-    # Dividir a imagem em camadas com base nas cores
+    # Divide image by layers based in colors
     for color, (lower_bound, upper_bound) in colors_to_gray.items():
-        # Criar uma máscara para a camada
+        # Create mask for a layer
         layer = np.zeros((height, width), dtype=np.uint8)
         mask = (image >= lower_bound) & (image <= upper_bound)
         layer[mask] = image[mask]
         
-        # Adicionar a camada à lista
+        # Add layer to the list
         layers.append(layer)
         
-        # Verificar se a pasta de saída existe, caso contrário, criar
+        # Check output folder existance, if not create
         if not os.path.exists(output_folder):
             os.makedirs(output_folder)
         
-        # Salvar cada camada como uma imagem
+        # Save each layer as image
         output_path = os.path.join(output_folder, f"{img_number}_layer_{color}.png")
         cv.imwrite(output_path, layer)
     
