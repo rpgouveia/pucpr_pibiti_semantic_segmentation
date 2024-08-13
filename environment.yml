@@ -17,6 +17,7 @@ dependencies:
   - babel=2.14.0=pyhd8ed1ab_0
   - beautifulsoup4=4.12.3=pyha770c72_0
   - bleach=6.1.0=pyhd8ed1ab_0
+  - brotli=1.0.9=he6710b0_2
   - brotli-python=1.1.0=py312h30efb56_1
   - bzip2=1.0.8=h4bc722e_7
   - c-ares=1.32.3=h4bc722e_0
@@ -24,11 +25,13 @@ dependencies:
   - cached-property=1.5.2=hd8ed1ab_1
   - cached_property=1.5.2=pyha770c72_1
   - cairo=1.18.0=hebfffa5_3
-  - certifi=2024.7.4=pyhd8ed1ab_0
+  - certifi=2024.7.4=py312h06a4308_0
   - cffi=1.16.0=py312hf06ca03_0
   - charset-normalizer=3.3.2=pyhd8ed1ab_0
   - click=8.1.7=py312h06a4308_0
   - comm=0.2.2=pyhd8ed1ab_0
+  - contourpy=1.2.1=py312h8572e83_0
+  - cycler=0.11.0=pyhd3eb1b0_0
   - dav1d=1.2.1=hd590300_0
   - dbus=1.13.6=h5008d03_3
   - debugpy=1.8.5=py312hca68cad_0
@@ -47,6 +50,7 @@ dependencies:
   - fontconfig=2.14.2=h14ed4e7_0
   - fonts-conda-ecosystem=1=0
   - fonts-conda-forge=1=0
+  - fonttools=4.51.0=py312h5eee18b_0
   - fqdn=1.5.1=pyhd8ed1ab_0
   - freeglut=3.2.2=ha6d2627_3
   - freetype=2.12.1=h267a509_2
@@ -91,8 +95,10 @@ dependencies:
   - jupyterlab_pygments=0.3.0=pyhd8ed1ab_1
   - jupyterlab_server=2.27.3=pyhd8ed1ab_0
   - keyutils=1.6.1=h166bdaf_0
+  - kiwisolver=1.4.4=py312h6a678d5_0
   - krb5=1.21.3=h659f571_0
   - lame=3.100=h166bdaf_1003
+  - lcms2=2.16=hb7c19ff_0
   - ld_impl_linux-64=2.40=hf3520f5_7
   - lerc=4.0.0=h27087fc_0
   - libabseil=20240116.2=cxx17_he02047a_1
@@ -164,8 +170,11 @@ dependencies:
   - libxcrypt=4.4.36=hd590300_1
   - libxkbcommon=1.7.0=h2c5496b_1
   - libxml2=2.12.7=he7c6b58_4
+  - libxslt=1.1.39=h76b75d6_0
   - libzlib=1.3.1=h4ab18f5_1
   - markupsafe=2.1.5=py312h98912ed_0
+  - matplotlib=3.9.1=py312h7900ff3_2
+  - matplotlib-base=3.9.1=py312h854627b_2
   - matplotlib-inline=0.1.7=pyhd8ed1ab_0
   - mistune=3.0.2=pyhd8ed1ab_0
   - mysql-common=8.3.0=h70512c7_5
@@ -182,6 +191,7 @@ dependencies:
   - opencv=4.10.0=qt6_py312hac6a15e_602
   - openexr=3.2.2=haf962dd_1
   - openh264=2.4.1=h59595ed_0
+  - openjpeg=2.5.2=he7f1fd0_0
   - openssl=3.3.1=h4bc722e_2
   - overrides=7.7.0=pyhd8ed1ab_0
   - p11-kit=0.24.1=hc5aa10d_0
@@ -191,6 +201,7 @@ dependencies:
   - pcre2=10.44=h0f59acf_0
   - pexpect=4.9.0=pyhd8ed1ab_0
   - pickleshare=0.7.5=py_1003
+  - pillow=10.4.0=py312h287a98d_0
   - pip=24.0=pyhd8ed1ab_0
   - pixman=0.43.2=h59595ed_0
   - pkgutil-resolve-name=1.3.10=pyhd8ed1ab_1
@@ -205,6 +216,8 @@ dependencies:
   - py-opencv=4.10.0=qt6_py312h071dcc1_602
   - pycparser=2.22=pyhd8ed1ab_0
   - pygments=2.18.0=pyhd8ed1ab_0
+  - pyparsing=3.0.9=py312h06a4308_0
+  - pyside6=6.7.2=py312hb5137db_2
   - pysocks=1.7.1=pyha2e5f31_6
   - python=3.12.4=h194c7f8_0_cpython
   - python-dateutil=2.9.0=pyhd8ed1ab_0
@@ -215,6 +228,7 @@ dependencies:
   - pytz=2024.1=pyhd8ed1ab_0
   - pyyaml=6.0.1=py312h98912ed_1
   - pyzmq=26.0.3=py312h8fd38d8_0
+  - qhull=2020.2=hdb19cb5_2
   - qt6-main=6.7.2=hb12f9c5_4
   - readline=8.2=h8228510_1
   - referencing=0.35.1=pyhd8ed1ab_0
@@ -242,6 +256,7 @@ dependencies:
   - typing_extensions=4.12.2=pyha770c72_0
   - typing_utils=0.1.0=pyhd8ed1ab_0
   - tzdata=2024a=h0c530f3_0
+  - unicodedata2=15.1.0=py312h5eee18b_0
   - uri-template=1.3.0=pyhd8ed1ab_0
   - urllib3=2.2.2=pyhd8ed1ab_1
   - wayland=1.23.0=h5291e77_0
