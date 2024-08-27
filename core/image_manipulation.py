@@ -5,7 +5,17 @@ import cv2 as cv
 import os
 
 
-def image_resize(image, input_size: int):
+def image_resize(image: ndarray, input_size: int) -> ndarray:
+    """
+    Resizes an image while maintaining its aspect ratio.
+
+    Parameters:
+        image (ndarray): The input image to be resized, represented as a NumPy array.
+        input_size (int): The desired height in pixels for the resized image. The width will be adjusted to maintain the original aspect ratio.
+
+    Returns:
+        The resized image as a NumPy array with the new dimensions.
+    """
     # Calculate image proportion for resize operation
     height, width = image.shape[:2]
     aspect_ratio = width / height
@@ -13,11 +23,30 @@ def image_resize(image, input_size: int):
     new_width = int(input_size * aspect_ratio)
 
     # Resize image
-    resized_img = cv.resize(image, (new_width, new_height))
+    resized_img: ndarray = cv.resize(image, (new_width, new_height))
     return resized_img
 
 
-def image_segmentation(filename, base_mask_folder, output_folder):
+def image_segmentation(filename: str, base_mask_folder: str, output_folder: str) -> None:
+    """
+    Segments an image based on predefined color limits and saves the resulting masks as a NumPy array.
+
+    Parameters:
+        filename (str): The name of the image file to be segmented, including its extension (e.g., "image1.jpg").
+        base_mask_folder (str): The directory containing the mask images with the same base name as the input image.
+        output_folder (str): The directory where the resulting NumPy array with the combined masks will be saved.
+
+    Procedure:
+        1. Extracts the base name of the image (without extension) to locate the corresponding mask file.
+        2. Loads the mask image and converts it from BGR to HSV color space.
+        3. Resizes the HSV image to a specified height while maintaining its aspect ratio.
+        4. Applies a series of color-based masks to the resized HSV image.
+        5. Concatenates all masks along the channel dimension to form a combined mask.
+        6. Saves the combined mask as a NumPy file (.npy) in the specified output folder.
+
+    Returns:
+        None. The function saves the combined mask directly to the output folder.
+    """
     img_number = filename.split(".")[0]
     mask_path: str = os.path.join(base_mask_folder, f"{img_number}.png")
 
