@@ -1,6 +1,7 @@
 from dotenv import load_dotenv
 from core.utils import get_all_files
 from core.image_manipulation import image_segmentation
+from tqdm import tqdm
 import os
 
 
@@ -17,5 +18,5 @@ output_folder: str = os.getenv("OUTPUT_FOLDER")
 ### Image Processing ###
 files: list[str] = get_all_files(base_mask_folder)
 
-for file in files:
+for file in tqdm(files, desc="Processing Images"):
     image_segmentation(file, base_mask_folder, output_folder)
