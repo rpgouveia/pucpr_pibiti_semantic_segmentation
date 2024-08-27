@@ -1,10 +1,6 @@
 from dotenv import load_dotenv
-from core.validation import get_valid_image_number, validate_image
-from core.image_manipulation import resize_image, filter_color_and_save
-from core.colors import colors_rgb
-from core.utils import print_colors_dict
-import cv2 as cv
-import numpy as np
+from core.utils import get_all_files
+from core.image_manipulation import image_segmentation
 import os
 
 
@@ -18,48 +14,8 @@ base_mask_folder: str = os.getenv("BASE_MASK_FOLDER")
 output_folder: str = os.getenv("OUTPUT_FOLDER")
 
 
-### Image and Mask Presentation ###
-# Choose image for treatment
-img_number: str = get_valid_image_number()
-img_path: str = os.path.join(base_img_folder, f"{img_number}.png")
-mask_path: str = os.path.join(base_mask_folder, f"{img_number}.png")
+### Image Processing ###
+files: list[str] = get_all_files(base_mask_folder)
 
-# Load image and mask
-image: np.ndarray = cv.imread(img_path)
-mask: np.ndarray = cv.imread(mask_path)
-
-# Image Validation
-validate_image(image, img_path, mask, mask_path)
-
-# Resize images for presentation
-resized_image: np.ndarray = resize_image(image)
-resized_mask: np.ndarray = resize_image(mask)
-
-# Combine images side by side
-combined_image: np.ndarray = np.hstack((resized_image, resized_mask))
-
-# Show combined image for the user
-cv.imshow("Image and Mask Side by Side", combined_image)
-
-# Wait user press keys to close images
-cv.waitKey(0)
-
-# Close all windows
-cv.destroyAllWindows()
-
-
-### Filter Process ###
-print("\nColors and Elements:")
-print_colors_dict(colors_rgb)
-element: str = input("Type the element from the list: ")
-result = filter_color_and_save(mask, element, img_number, output_folder)
-
-# Show the filtered image to the user
-if result:
-    output_path, filtered_image = result
-    cv.imshow("Filtered Image", filtered_image)
-    cv.waitKey(0)
-    cv.destroyAllWindows()
-    print(f"Image saved at: {output_path}")
-else:
-    print("Element not found in the mask.")
+for file in files:
+    image_segmentation(file, base_mask_folder, output_folder)
