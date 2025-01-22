@@ -16,14 +16,16 @@ def image_resize(image: ndarray, input_size: int) -> ndarray:
     Returns:
         The resized image as a NumPy array with the new dimensions.
     """
+    # Modificação: Remoção do cálculo de proporção para viabilizar formato 256, 256, 18
     # Calculate image proportion for resize operation
-    height, width = image.shape[:2]
-    aspect_ratio = width / height
-    new_height = input_size
-    new_width = int(input_size * aspect_ratio)
+    # height, width = image.shape[:2]
+    # aspect_ratio = width / height
+    # new_height = input_size
+    # new_width = int(input_size * aspect_ratio)
 
     # Resize image
-    resized_img: ndarray = cv.resize(image, (new_width, new_height))
+    # resized_img: ndarray = cv.resize(image, (new_width, new_height))
+    resized_img: ndarray = cv.resize(image, (input_size, input_size))
     return resized_img
 
 
@@ -55,7 +57,8 @@ def image_segmentation(filename: str, base_mask_folder: str, output_folder: str)
     hsv_img: ndarray = cv.cvtColor(bgr_img, cv.COLOR_BGR2HSV)
 
     # Resize process
-    resized_hsv_img = image_resize(hsv_img, input_size=512)
+    # Modificação: Redimensionar máscara no formato 256,256,18
+    resized_hsv_img = image_resize(hsv_img, input_size=256)
 
     # Create masks for each color and concatenate them
     masks: list[ndarray] = []
