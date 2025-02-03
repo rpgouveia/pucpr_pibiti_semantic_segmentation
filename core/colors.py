@@ -40,6 +40,10 @@ color_limits = [
     # Mobility Devices: Walker
     (np.array([6, 23, 225]), np.array([9, 42, 235])),
 
+    # Light Crimson
+    # Mobility Devices: Orthopedic Crutch
+    (np.array([158, 97, 247]), np.array([170, 146, 251])),
+
     # Light Gray Color
     # Transport: Car, Bus
     (np.array([27, 5, 203]), np.array([38, 12, 206])),
@@ -71,6 +75,10 @@ color_limits = [
     # Red Color
     # Passerby: People
     (np.array([0, 240, 255]), np.array([0, 255, 255])),
+
+    # Ultra Light Blue
+    # Mobility Devices: Cane
+    (np.array([90, 40, 230]), np.array([105, 60, 245])),
 
     # Yellow Color
     # Building: Building
