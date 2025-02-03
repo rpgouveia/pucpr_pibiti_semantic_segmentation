@@ -12,7 +12,7 @@ load_dotenv()
 # Base Path for image folder
 base_img_folder: str = os.getenv("BASE_IMG_FOLDER")
 base_mask_folder: str = os.getenv("BASE_MASK_FOLDER")
-output_folder: str = os.getenv("OUTPUT_FOLDER")
+output_folder: str = os.getenv("NUMPY_FOLDER")
 
 
 def main() -> None:
