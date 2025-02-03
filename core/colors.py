@@ -2,6 +2,7 @@ import numpy as np
 
 
 # Define color limits for all 18 elements
+# HSV lower bound, upper bound: Hue, Saturation, Value
 color_limits = [
     # Aqua Color
     (np.array([70, 82, 255]), np.array([90, 255, 255])),
