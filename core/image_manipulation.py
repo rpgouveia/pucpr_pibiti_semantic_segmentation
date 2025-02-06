@@ -16,7 +16,19 @@ def image_resize(image: ndarray, input_size: int) -> ndarray:
     Returns:
         The resized image as a NumPy array with the new dimensions.
     """
-    resized_img: ndarray = cv.resize(image, (input_size, input_size), interpolation=cv.INTER_CUBIC)
+    # # Calculate image proportion for resize operation
+    # height, width = image.shape[:2]
+    # aspect_ratio = width / height
+    # new_height = input_size
+    # new_width = int(input_size * aspect_ratio)
+
+    # # Resize image respecting the proportion (old version)
+    # resized_img = cv.resize(image, (new_width, new_height))
+    # resized_img: ndarray = cv.resize(image, (new_width, new_height), interpolation=cv.INTER_NEAREST)
+    # return resized_img
+
+    # Resize image (current version)
+    resized_img: ndarray = cv.resize(image, (input_size, input_size), interpolation=cv.INTER_NEAREST)
     return resized_img
 
 
