@@ -11,12 +11,12 @@ def image_resize(image: ndarray, input_size: int) -> ndarray:
 
     Parameters:
         image (ndarray): The input image to be resized, represented as a NumPy array.
-        input_size (int): The desired height in pixels for the resized image. The width will be adjusted to maintain the original aspect ratio.
+        input_size (int): The desired height in pixels for the resized image.
 
     Returns:
         The resized image as a NumPy array with the new dimensions.
     """
-    resized_img: ndarray = cv.resize(image, (input_size, input_size))
+    resized_img: ndarray = cv.resize(image, (input_size, input_size), interpolation=cv.INTER_CUBIC)
     return resized_img
 
 
