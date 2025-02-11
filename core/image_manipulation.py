@@ -72,7 +72,8 @@ def image_segmentation(filename: str, base_mask_folder: str, output_folder: str)
     combined_mask: ndarray = np.concatenate(masks, axis=2)
 
     # Resize the combined mask after segmentation
-    resized_combined_mask = image_resize(combined_mask, input_size=256)
+    # resized_combined_mask = image_resize(combined_mask, input_size=256)
+    resized_combined_mask = image_resize(combined_mask, input_size=512)
 
     # Save resized combined mask as a NumPy file
     output_file: str = os.path.join(output_folder, f"{img_number}.npy")
