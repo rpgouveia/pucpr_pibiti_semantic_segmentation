@@ -64,11 +64,12 @@ def image_segmentation(filename: str, base_mask_folder: str, output_folder: str)
     masks: list[ndarray] = []
     for lower_bound, upper_bound in color_limits:
         mask: ndarray = cv.inRange(hsv_img, lower_bound, upper_bound)
-        # Binarização
-        # Resize para 512 com Inter AREA
-        # Binarização
-        # Filtragem por Contornos
-        # Morfologia
+            # Pseudocódigo para refatoração:
+            # Binarização
+            # Morfologia (adicionar tamanho de kernel de acordo com a classe)
+            # Filtragem por Contornos
+            # Resize para 512x512 com Interpolação AREA
+            # Binarização (Verificar o threshold na segmentação)
 
         # Add new axis for each mask binary mask
         mask = mask[..., np.newaxis]
