@@ -7,28 +7,21 @@ import os
 
 def image_resize(image: ndarray, input_size: int) -> ndarray:
     """
-    Resizes an image while maintaining its aspect ratio.
+    Resizes an image while maintaining its aspect ratio to fit within a square.
+
+    The image is resized such that the shorter side is scaled to `input_size`,
+    and the longer side is scaled proportionally. The resulting image is then
+    placed within a square canvas of size `input_size x input_size`.
 
     Parameters:
         image (ndarray): The input image to be resized, represented as a NumPy array.
-        input_size (int): The desired height in pixels for the resized image.
+        input_size (int): The desired size (height and width) in pixels for the square output image.
 
     Returns:
-        The resized image as a NumPy array with the new dimensions.
+        ndarray: The resized image as a NumPy array with the new dimensions (input_size x input_size).
     """
-    # # Calculate image proportion for resize operation
-    # height, width = image.shape[:2]
-    # aspect_ratio = width / height
-    # new_height = input_size
-    # new_width = int(input_size * aspect_ratio)
 
-    # # Resize image respecting the proportion (old version)
-    # resized_img = cv.resize(image, (new_width, new_height))
-    # resized_img: ndarray = cv.resize(image, (new_width, new_height), interpolation=cv.INTER_NEAREST)
-    # return resized_img
-
-    # Resize image (current version)
-    resized_img: ndarray = cv.resize(image, (input_size, input_size), interpolation=cv.INTER_NEAREST)
+    resized_img: ndarray = cv.resize(image, (input_size, input_size), interpolation=cv.INTER_AREA)
     return resized_img
 
 
