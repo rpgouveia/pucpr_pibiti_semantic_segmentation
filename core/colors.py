@@ -1,94 +1,72 @@
 import numpy as np
 
 
-# Define color limits for all 18 elements
-# HSV (Hue, Saturation, Value): lower bound to upper bound
+# The color limits in HSV space color for all 22 classes
+# lower_bound = np.array(H, S, V) and upper_bound = np.array(H, S, V)
 color_limits = [
-    # Aqua
-    # Urban infrastructure: Street Light Pole
-    (np.array([70, 82, 255]), np.array([90, 255, 255])),
+    # Building (#85ff0c): Building
+    (np.array([40, 49, 210]), np.array([44, 194, 255])),
+    
+    # Mobility Devices (#137f49): Motorized Wheelchair
+    (np.array([77, 132, 185]), np.array([79, 151, 188])),
 
-    # Aquamarine
-    # Mobility Devices: Motorized Wheelchair
-    (np.array([78, 129, 241]), np.array([79, 145, 246])),
+    # Mobility Devices (#13647f): Crutch
+    (np.array([92, 132, 183]), np.array([98, 151, 188])),
+    
+    # Mobility Devices (#64137f): Walker
+    (np.array([141, 150, 187]), np.array([145, 173, 221])),
 
-    # Blue
-    # Urban infrastructure: Street
-    (np.array([120, 247, 255]), np.array([120, 255, 255])),
+    # Mobility Devices (#7f7f13): Wheelchair
+    (np.array([20, 140, 178]), np.array([31, 151, 198])),
 
-    # Fuchsia
-    # Street Furniture: Boullard, Signpost, Bench, Public Trash Can, Swing, Parasol, Advertising Panel
-    (np.array([150, 255, 255]), np.array([150, 255, 255])),
+    # Mobility Devices (#13137f): Orthopedic Cane
+    (np.array([120, 150, 187]), np.array([129, 163, 205])),
 
-    # Green
-    # Nature: Grass
-    (np.array([59, 248, 255]), np.array([60, 255, 255])),
+    # Mobility Devices (#2e7f13): Cane
+    (np.array([32, 77, 163]), np.array([72, 163, 214])),
 
-    # Light Amber
-    # Mobility Devices: Wheelchair
-    (np.array([19, 91, 241]), np.array([20, 94, 242])),
+    # Mobility Devices (#7f1349): Orthopedic Crutch
+    (np.array([161, 149, 187]), np.array([168, 178, 212])),
 
-    # Light Blue Violet
-    # Urban infrastructure: Speed Sign, Time Limit Parking Sign
-    (np.array([115, 117, 235]), np.array([115, 124, 237])),
+    # Nature (#0cffff): Grass
+    (np.array([90, 192, 255]), np.array([90, 194, 255])),
 
-    # Light Blue
-    # Nature: Tree, Plants
-    (np.array([106, 71, 235]), np.array([107, 73, 236])),
+    # Nature (#0cff49): Tree, Plants
+    (np.array([73, 192, 255]), np.array([73, 194, 255])),
 
-    # Light Coral
-    # Mobility Devices: Walker
-    (np.array([6, 23, 225]), np.array([9, 42, 235])),
+    # Passerby (#ff0c0c): Humans
+    (np.array([0, 230, 240]), np.array([176, 255, 255])),
 
-    # Light Crimson
-    # Mobility Devices: Orthopedic Crutch
-    (np.array([158, 97, 247]), np.array([170, 146, 251])),
+    # Passerby (#4c2f13): Dogs
+    (np.array([15, 191, 76]), np.array([15, 191, 76])),
 
-    # Light Gray
-    # Transport: Car, Bus
-    (np.array([27, 5, 203]), np.array([38, 12, 206])),
+    # Street Furniture (#ff0cc2): Boullard, Signpost, Bench, Public Trash Can, Swing, Parasol, Advertising Panel
+    (np.array([154, 193, 255]), np.array([155, 194, 255])),
 
-    # Light Khaki
-    # Street Furniture: Fountain, Monument, Tourist Spot
-    (np.array([26, 80, 251]), np.array([26, 88, 252])),
+    # Street Furniture (#21134c): Fountain, Monuments, Tourist Spots
+    (np.array([129, 121, 148]), np.array([130, 123, 149])),
 
-    # Light Olive
-    # Transport: Bike
-    (np.array([37, 79, 217]), np.array([47, 130, 235])),
+    # Transport (#ffc20c): Car, Bus, Vehicles
+    (np.array([25, 192, 255]), np.array([26, 194, 255])),
 
-    # Light Orange
-    # Mobility Devices: Orthopedic Cane
-    (np.array([12, 61, 230]), np.array([15, 95, 236])),
+    # Transport (#132f4c): Bike
+    (np.array([102, 121, 148]), np.array([103, 123, 149])),
 
-    # Light Teal
-    # Mobility Devices: Crutch
-    (np.array([73, 108, 254]), np.array([74, 111, 255])),
+    # Transport (#3e4c13): Motorcycle, Scooter
+    (np.array([35, 121, 148]), np.array([36, 123, 149])),
 
-    # Medium Orange
-    # Passerby: Dog
-    (np.array([14, 230, 252]), np.array([14, 230, 252])),
+    # Urban infrastructure (#7f2f13): Street Light Pole
+    (np.array([0, 102, 187]), np.array([24, 157, 188])),
 
-    # Medium Purple
-    # Transport: Motorcycle, Scooter
-    (np.array([138, 59, 176]), np.array([139, 81, 187])),
+    # Urban infrastructure (#1349ff): Streets
+    (np.array([107, 193, 255]), np.array([107, 194, 255])),
 
-    # Pale Aqua
-    # Urban infrastructure: Traffic Light Pole
-    (np.array([77, 51, 253]), np.array([86, 60, 254])),
+    # Urban infrastructure (#134c3e): Speed Sign, Time Limit Parking Sign
+    (np.array([82, 117, 148]), np.array([85, 123, 152])),
 
-    # Red
-    # Passerby: People
-    (np.array([0, 240, 255]), np.array([0, 255, 255])),
+    # Urban infrastructure (#134c13): Traffic Light Pole
+    (np.array([59, 122, 148]), np.array([60, 123, 150])),
 
-    # Ultra Light Blue
-    # Mobility Devices: Cane
-    (np.array([90, 40, 230]), np.array([105, 60, 245])),
-
-    # White
-    # Urban infrastructure: Sidewalks
-    (np.array([0, 0, 255]), np.array([0, 0, 255])),
-
-    # Yellow
-    # Building: Building
-    (np.array([30, 242, 255]), np.array([30, 255, 255]))
+    # Urban infrastructure (#8513ff): Sidewalks
+    (np.array([140, 193, 255]), np.array([140, 194, 255]))
 ]
