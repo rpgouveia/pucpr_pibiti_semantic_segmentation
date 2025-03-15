@@ -258,6 +258,11 @@ def image_segmentation(
 
     # Load and Convert Images
     bgr_img: ndarray = cv.imread(mask_path, 1)
+
+    if bgr_img is None:
+        print(f"ERROR: Unable to read image {mask_path}")
+        return
+
     hsv_img: ndarray = cv.cvtColor(bgr_img, cv.COLOR_BGR2HSV)
 
     # Create and process masks for each class with class-specific parameters
