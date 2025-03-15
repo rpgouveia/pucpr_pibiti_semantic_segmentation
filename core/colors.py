@@ -63,35 +63,35 @@ class_parameters: list[dict[str, Any]] = [
         "kernel_size": (2, 2),
         "growth_conditions": {
             "h_type": "normal",
-            "h_range": (18, 33),
-            "s_range": (138, 153),
-            "v_range": (176, 200)
+            "h_range": (12, 33),
+            "s_range": (41, 180),
+            "v_range": (183, 213)
         }
     },
 
     # Mobility Devices (#13137f): Orthopedic Cane
     {
         "color_limits": (np.array([120, 150, 187]), np.array([129, 163, 205])),
-        "min_area": 5,
+        "min_area": 2,
         "kernel_size": (2, 2),
         "growth_conditions": {
             "h_type": "normal",
-            "h_range": (118, 131),
-            "s_range": (148, 165),
-            "v_range": (185, 210)
+            "h_range": (120, 129),
+            "s_range": (150, 163),
+            "v_range": (187, 205)
         }
     },
 
     # Mobility Devices (#2e7f13): Cane
     {
         "color_limits": (np.array([32, 77, 163]), np.array([72, 163, 214])),
-        "min_area": 5,
-        "kernel_size": (2, 2),
+        "min_area": 20,
+        "kernel_size": (3, 3),
         "growth_conditions": {
-            "h_type": "normal",
-            "h_range": (30, 74),
-            "s_range": (75, 165),
-            "v_range": (160, 220)
+            "h_type": "circular",   # Wraparound condition
+            "h_range": (151, 18),
+            "s_range": (72, 193),
+            "v_range": (166, 251)
         }
     },
 
@@ -102,48 +102,48 @@ class_parameters: list[dict[str, Any]] = [
         "kernel_size": (2, 2),
         "growth_conditions": {
             "h_type": "normal",
-            "h_range": (159, 170),
-            "s_range": (147, 180),
-            "v_range": (185, 215)
+            "h_range": (161, 175),
+            "s_range": (149, 221),
+            "v_range": (187, 243)
         }
     },
 
     # Nature (#0cffff): Grass
     {
         "color_limits": (np.array([90, 192, 255]), np.array([90, 194, 255])),
-        "min_area": 30,
+        "min_area": 5,
         "kernel_size": (2, 2),
         "growth_conditions": {
             "h_type": "normal",
-            "h_range": (88, 92),
-            "s_range": (190, 196),
-            "v_range": (250, 255)
+            "h_range": (90, 90),
+            "s_range": (192, 194),
+            "v_range": (255, 255)
         }
     },
 
     # Nature (#0cff49): Tree, Plants
     {
         "color_limits": (np.array([73, 192, 255]), np.array([73, 194, 255])),
-        "min_area": 30,
+        "min_area": 5,
         "kernel_size": (2, 2),
         "growth_conditions": {
             "h_type": "normal",
-            "h_range": (71, 75),
-            "s_range": (190, 196),
-            "v_range": (250, 255)
+            "h_range": (73, 78),
+            "s_range": (192, 194),
+            "v_range": (255, 255)
         }
     },
 
     # Passerby (#ff0c0c): Humans
     {
         "color_limits": (np.array([0, 230, 240]), np.array([176, 255, 255])),
-        "min_area": 20,
-        "kernel_size": (2, 2),
+        "min_area": 5,
+        "kernel_size": (3, 3),
         "growth_conditions": {
-            "h_type": "normal",
-            "h_range": (0, 176),
-            "s_range": (225, 255),
-            "v_range": (235, 255)
+            "h_type": "circular",   # Wraparound condition
+            "h_range": (151, 18),
+            "s_range": (72, 193),
+            "v_range": (166, 251)
         }
     },
 
@@ -163,65 +163,65 @@ class_parameters: list[dict[str, Any]] = [
     # Street Furniture (#ff0cc2): Boullard, Signpost, Bench, Public Trash Can, Swing, Parasol, Advertising Panel
     {
         "color_limits": (np.array([154, 193, 255]), np.array([155, 194, 255])),
-        "min_area": 10,
+        "min_area": 5,
         "kernel_size": (2, 2),
         "growth_conditions": {
             "h_type": "normal",
-            "h_range": (153, 156),
-            "s_range": (191, 196),
-            "v_range": (250, 255)
+            "h_range": (154, 155),
+            "s_range": (193, 194),
+            "v_range": (255, 255)
         }
     },
 
     # Street Furniture (#21134c): Fountain, Monuments, Tourist Spots
     {
         "color_limits": (np.array([129, 121, 148]), np.array([130, 123, 149])),
-        "min_area": 10,
+        "min_area": 5,
         "kernel_size": (2, 2),
         "growth_conditions": {
             "h_type": "normal",
-            "h_range": (128, 131),
-            "s_range": (119, 125),
-            "v_range": (146, 151)
+            "h_range": (129, 130),
+            "s_range": (121, 123),
+            "v_range": (148, 149)
         }
     },
 
     # Transport (#ffc20c): Car, Bus, Vehicles
     {
         "color_limits": (np.array([25, 192, 255]), np.array([26, 194, 255])),
-        "min_area": 50,
+        "min_area": 5,
         "kernel_size": (2, 2),
         "growth_conditions": {
             "h_type": "normal",
-            "h_range": (24, 27),
-            "s_range": (190, 196),
-            "v_range": (250, 255)
+            "h_range": (25, 26),
+            "s_range": (192, 194),
+            "v_range": (255, 255)
         }
     },
 
     # Transport (#132f4c): Bike
     {
         "color_limits": (np.array([102, 121, 148]), np.array([103, 123, 149])),
-        "min_area": 10,
+        "min_area": 0,
         "kernel_size": (2, 2),
         "growth_conditions": {
             "h_type": "normal",
-            "h_range": (101, 104),
-            "s_range": (119, 125),
-            "v_range": (146, 151)
+            "h_range": (75, 109),
+            "s_range": (75, 185),
+            "v_range": (144, 240)
         }
     },
 
     # Transport (#3e4c13): Motorcycle, Scooter
     {
         "color_limits": (np.array([35, 121, 148]), np.array([36, 123, 149])),
-        "min_area": 15,
+        "min_area": 0,
         "kernel_size": (2, 2),
         "growth_conditions": {
             "h_type": "normal",
-            "h_range": (34, 37),
-            "s_range": (119, 125),
-            "v_range": (146, 151)
+            "h_range": (3, 147),
+            "s_range": (19, 140),
+            "v_range": (142, 220)
         }
     },
 
@@ -231,62 +231,62 @@ class_parameters: list[dict[str, Any]] = [
         "min_area": 5,
         "kernel_size": (2, 2),
         "growth_conditions": {
-            "h_type": "normal",
-            "h_range": (0, 26),
-            "s_range": (100, 160),
-            "v_range": (185, 190)
+            "h_type": "circular",   # Wraparound condition
+            "h_range": (151, 18),
+            "s_range": (72, 193),
+            "v_range": (166, 251)
         }
     },
 
     # Urban infrastructure (#1349ff): Streets
     {
         "color_limits": (np.array([107, 193, 255]), np.array([107, 194, 255])),
-        "min_area": 50,
+        "min_area": 0,
         "kernel_size": (2, 2),
         "growth_conditions": {
             "h_type": "normal",
-            "h_range": (105, 109),
-            "s_range": (191, 196),
-            "v_range": (250, 255)
+            "h_range": (107, 107),
+            "s_range": (193, 194),
+            "v_range": (255, 255)
         }
     },
 
     # Urban infrastructure (#134c3e): Speed Sign, Time Limit Parking Sign
     {
         "color_limits": (np.array([82, 117, 148]), np.array([85, 123, 152])),
-        "min_area": 5,
+        "min_area": 0,
         "kernel_size": (2, 2),
         "growth_conditions": {
             "h_type": "normal",
-            "h_range": (80, 87),
-            "s_range": (115, 125),
-            "v_range": (146, 155)
+            "h_range": (51, 85),
+            "s_range": (88, 123),
+            "v_range": (148, 189)
         }
     },
 
     # Urban infrastructure (#134c13): Traffic Light Pole
     {
         "color_limits": (np.array([59, 122, 148]), np.array([60, 123, 150])),
-        "min_area": 5,
+        "min_area": 0,
         "kernel_size": (2, 2),
         "growth_conditions": {
             "h_type": "normal",
-            "h_range": (58, 61),
-            "s_range": (120, 125),
-            "v_range": (146, 152)
+            "h_range": (49, 76),
+            "s_range": (67, 148),
+            "v_range": (140, 178)
         }
     },
 
     # Urban infrastructure (#8513ff): Sidewalks
     {
         "color_limits": (np.array([140, 193, 255]), np.array([140, 194, 255])),
-        "min_area": 50,
+        "min_area": 0,
         "kernel_size": (2, 2),
         "growth_conditions": {
             "h_type": "normal",
-            "h_range": (138, 142),
-            "s_range": (191, 196),
-            "v_range": (250, 255)
+            "h_range": (140, 140),
+            "s_range": (193, 194),
+            "v_range": (255, 255)
         }
     }
 ]
