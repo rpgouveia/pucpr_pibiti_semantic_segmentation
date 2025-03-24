@@ -7,14 +7,15 @@ class_parameters: list[dict[str, Any]] = [
     # Building (#85ff0c): Building
     {
         "color_limits": (np.array([40, 49, 210]), np.array([44, 194, 255])),
-        "min_area": 50,
+        "min_area": 0,
         "kernel_size": (2, 2),
         "growth_conditions": {
             "h_type": "normal",
             "h_range": (38, 46),
             "s_range": (45, 200),
             "v_range": (205, 255)
-        }
+        },
+        "morph_operations": ["close"]
     },
     
     # Mobility Devices (#137f49): Motorized Wheelchair
@@ -27,7 +28,8 @@ class_parameters: list[dict[str, Any]] = [
             "h_range": (75, 81),
             "s_range": (130, 153),
             "v_range": (183, 190)
-        }
+        },
+        "morph_operations": ["close"]
     },
 
     # Mobility Devices (#13647f): Crutch
@@ -40,7 +42,8 @@ class_parameters: list[dict[str, Any]] = [
             "h_range": (151, 18),
             "s_range": (72, 193),
             "v_range": (166, 251)
-        }
+        },
+        "morph_operations": ["close"]
     },
     
     # Mobility Devices (#64137f): Walker
@@ -53,7 +56,8 @@ class_parameters: list[dict[str, Any]] = [
             "h_range": (141, 147),
             "s_range": (140, 183),
             "v_range": (177, 231)
-        }
+        },
+        "morph_operations": ["close"]
     },
 
     # Mobility Devices (#7f7f13): Wheelchair
@@ -66,7 +70,8 @@ class_parameters: list[dict[str, Any]] = [
             "h_range": (12, 33),
             "s_range": (41, 180),
             "v_range": (183, 213)
-        }
+        },
+        "morph_operations": ["close"]
     },
 
     # Mobility Devices (#13137f): Orthopedic Cane
@@ -79,20 +84,22 @@ class_parameters: list[dict[str, Any]] = [
             "h_range": (120, 129),
             "s_range": (150, 163),
             "v_range": (187, 205)
-        }
+        },
+        "morph_operations": ["close"]
     },
 
     # Mobility Devices (#2e7f13): Cane
     {
-        "color_limits": (np.array([32, 77, 163]), np.array([72, 163, 214])),
-        "min_area": 20,
-        "kernel_size": (3, 3),
+        "color_limits": (np.array([31, 145, 165]), np.array([50, 151, 187])),
+        "min_area": 10,
+        "kernel_size": (2, 2),
         "growth_conditions": {
-            "h_type": "circular",   # Wraparound condition
-            "h_range": (151, 18),
-            "s_range": (72, 193),
-            "v_range": (166, 251)
-        }
+            "h_type": "normal",
+            "h_range": (0, 139),
+            "s_range": (5, 180),
+            "v_range": (158, 195)
+        },
+        "morph_operations": ["close", "open"]
     },
 
     # Mobility Devices (#7f1349): Orthopedic Crutch
@@ -105,7 +112,8 @@ class_parameters: list[dict[str, Any]] = [
             "h_range": (161, 175),
             "s_range": (149, 221),
             "v_range": (187, 243)
-        }
+        },
+        "morph_operations": ["close"]
     },
 
     # Nature (#0cffff): Grass
@@ -118,7 +126,8 @@ class_parameters: list[dict[str, Any]] = [
             "h_range": (90, 90),
             "s_range": (192, 194),
             "v_range": (255, 255)
-        }
+        },
+        "morph_operations": ["close"]
     },
 
     # Nature (#0cff49): Tree, Plants
@@ -131,7 +140,8 @@ class_parameters: list[dict[str, Any]] = [
             "h_range": (73, 78),
             "s_range": (192, 194),
             "v_range": (255, 255)
-        }
+        },
+        "morph_operations": ["close"]
     },
 
     # Passerby (#ff0c0c): Humans
@@ -144,7 +154,8 @@ class_parameters: list[dict[str, Any]] = [
             "h_range": (151, 18),
             "s_range": (72, 193),
             "v_range": (166, 251)
-        }
+        },
+        "morph_operations": ["close"]
     },
 
     # Passerby (#4c2f13): Dogs
@@ -157,7 +168,8 @@ class_parameters: list[dict[str, Any]] = [
             "h_range": (14, 16),
             "s_range": (189, 193),
             "v_range": (74, 78)
-        }
+        },
+        "morph_operations": ["close"]
     },
 
     # Street Furniture (#ff0cc2): Boullard, Signpost, Bench, Public Trash Can, Swing, Parasol, Advertising Panel
@@ -170,7 +182,8 @@ class_parameters: list[dict[str, Any]] = [
             "h_range": (154, 155),
             "s_range": (193, 194),
             "v_range": (255, 255)
-        }
+        },
+        "morph_operations": ["close"]
     },
 
     # Street Furniture (#21134c): Fountain, Monuments, Tourist Spots
@@ -183,7 +196,8 @@ class_parameters: list[dict[str, Any]] = [
             "h_range": (129, 130),
             "s_range": (121, 123),
             "v_range": (148, 149)
-        }
+        },
+        "morph_operations": ["close"]
     },
 
     # Transport (#ffc20c): Car, Bus, Vehicles
@@ -196,7 +210,8 @@ class_parameters: list[dict[str, Any]] = [
             "h_range": (25, 26),
             "s_range": (192, 194),
             "v_range": (255, 255)
-        }
+        },
+        "morph_operations": ["close"]
     },
 
     # Transport (#132f4c): Bike
@@ -209,7 +224,8 @@ class_parameters: list[dict[str, Any]] = [
             "h_range": (75, 109),
             "s_range": (75, 185),
             "v_range": (144, 240)
-        }
+        },
+        "morph_operations": ["close"]
     },
 
     # Transport (#3e4c13): Motorcycle, Scooter
@@ -222,7 +238,8 @@ class_parameters: list[dict[str, Any]] = [
             "h_range": (3, 147),
             "s_range": (19, 140),
             "v_range": (142, 220)
-        }
+        },
+        "morph_operations": ["close"]
     },
 
     # Urban infrastructure (#7f2f13): Street Light Pole
@@ -235,7 +252,8 @@ class_parameters: list[dict[str, Any]] = [
             "h_range": (151, 18),
             "s_range": (72, 193),
             "v_range": (166, 251)
-        }
+        },
+        "morph_operations": ["close"]
     },
 
     # Urban infrastructure (#1349ff): Streets
@@ -248,7 +266,8 @@ class_parameters: list[dict[str, Any]] = [
             "h_range": (107, 107),
             "s_range": (193, 194),
             "v_range": (255, 255)
-        }
+        },
+        "morph_operations": ["close"]
     },
 
     # Urban infrastructure (#134c3e): Speed Sign, Time Limit Parking Sign
@@ -261,7 +280,8 @@ class_parameters: list[dict[str, Any]] = [
             "h_range": (51, 85),
             "s_range": (88, 123),
             "v_range": (148, 189)
-        }
+        },
+        "morph_operations": ["close"]
     },
 
     # Urban infrastructure (#134c13): Traffic Light Pole
@@ -274,7 +294,8 @@ class_parameters: list[dict[str, Any]] = [
             "h_range": (49, 76),
             "s_range": (67, 148),
             "v_range": (140, 178)
-        }
+        },
+        "morph_operations": ["close"]
     },
 
     # Urban infrastructure (#8513ff): Sidewalks
@@ -287,7 +308,8 @@ class_parameters: list[dict[str, Any]] = [
             "h_range": (140, 140),
             "s_range": (193, 194),
             "v_range": (255, 255)
-        }
+        },
+        "morph_operations": ["close"]
     }
 ]
 

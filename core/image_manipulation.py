@@ -158,21 +158,36 @@ def apply_region_growing(
 
 
 def apply_morphology(
-    mask: ndarray, kernel_size: tuple = (2, 2), operation: int = cv.MORPH_CLOSE
+    mask: ndarray, kernel_size: tuple = (2, 2), operations: list = ["close"]
 ) -> ndarray:
     """
-    Applies morphological operations to a binary mask.
+    Applies a sequence of morphological operations to a binary mask.
 
     Parameters:
         mask (ndarray): Binary input mask.
-        kernel_size (tuple, optional): Size of the kernel for morphological operation.
-        operation (int, optional): OpenCV morphological operation. Defaults to cv.MORPH_CLOSE.
+        kernel_size (tuple, optional): Size of the kernel for morphological operations.
+        operations (list, optional): List of OpenCV morphological operations. 
+                                    Supported values: "close", "open", "dilate", "erode".
+                                    Default is ["close"].
 
     Returns:
-        ndarray: Binary mask after morphological operation.
+        ndarray: Binary mask after morphological operations.
     """
     kernel = np.ones(kernel_size, np.uint8)
-    return cv.morphologyEx(mask, operation, kernel)
+    result = mask.copy()
+    
+    # Apply operations in sequence
+    for operation in operations:
+        if operation == "close":
+            result = cv.morphologyEx(result, cv.MORPH_CLOSE, kernel)
+        elif operation == "open":
+            result = cv.morphologyEx(result, cv.MORPH_OPEN, kernel)
+        elif operation == "dilate":
+            result = cv.dilate(result, kernel)
+        elif operation == "erode":
+            result = cv.erode(result, kernel)
+    
+    return result
 
 
 def resize_binary_mask(mask: ndarray, target_size: tuple = (512, 512)) -> ndarray:
@@ -194,12 +209,13 @@ def process_class_mask(
     hsv_img: ndarray, class_param: dict, target_size: tuple = (512, 512)
 ) -> ndarray:
     """
-    Process a single class mask through the entire pipeline: extraction, filtering,
-    region growing, morphology, and resizing.
+    Process a single class mask through the entire pipeline: extraction, region growing,
+    morphology, filtering, and resizing.
 
     Parameters:
         hsv_img (ndarray): Input image in HSV color space.
-        class_param (dict): Parameters for this class including color_limits, min_area, and growth_conditions.
+        class_param (dict): Parameters for this class including color_limits, min_area, 
+                            growth_conditions, and morph_operations.
         target_size (tuple, optional): Target size for the output mask. Defaults to (512, 512).
 
     Returns:
@@ -210,21 +226,22 @@ def process_class_mask(
     min_area = class_param["min_area"]
     growth_conditions = class_param["growth_conditions"]
     kernel_size = class_param.get("kernel_size", (2, 2))
+    morph_operations = class_param.get("morph_operations", ["close"])
 
     # 1. Extract color mask
     color_mask = extract_color_mask(hsv_img, lower_bound, upper_bound)
 
-    # 2. Filter contours with class-specific min_area
-    filtered_mask = filter_contours(color_mask, min_area)
+    # 2. Apply region growing with class-specific conditions
+    region_mask = apply_region_growing(color_mask, hsv_img, growth_conditions)
 
-    # 3. Apply region growing with class-specific conditions
-    region_mask = apply_region_growing(filtered_mask, hsv_img, growth_conditions)
+    # 3. Apply morphological operations with class-specific kernel and operations sequence
+    morphed_mask = apply_morphology(region_mask, kernel_size, morph_operations)
 
-    # 4. Apply morphological operations with class-specific kernel
-    morphed_mask = apply_morphology(region_mask, kernel_size)
+    # 4. Filter contours with class-specific min_area
+    filtered_mask = filter_contours(morphed_mask, min_area)
 
     # 5. Resize mask
-    resized_mask = resize_binary_mask(morphed_mask, target_size)
+    resized_mask = resize_binary_mask(filtered_mask, target_size)
 
     return resized_mask
 
