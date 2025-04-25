@@ -1,8 +1,0 @@
-Métrica,Valor
-hamming_loss,0.03176250173286958
-exact_match_ratio,0.5282411202788353
-subset_accuracy,0.5282411202788353
-zero_pred_ratio,0.23049049079418182
-mean_true_classes_per_pixel,1.007453203201294
-mean_pred_classes_per_pixel,0.7967042922973633
-mean_pixel_jaccard,0.5387326372166474

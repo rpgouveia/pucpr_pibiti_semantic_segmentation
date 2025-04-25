@@ -1,5 +1,0 @@
-Métrica,Valor,Requisito Mínimo,Valor Ideal,Status
-IoU Global,0.0626842266467789,0.75,0.85,❌ ABAIXO
-F1-Score Global,0.08728291232562825,0.80,0.85,❌ ABAIXO
-Precision Global,0.13291895930664985,N/A,N/A,N/A
-Recall Global,0.0985933401775691,N/A,N/A,N/A
