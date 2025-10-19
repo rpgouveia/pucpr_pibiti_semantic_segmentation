@@ -1,8 +1,8 @@
 Metric,Value
-hamming_loss,0.03178203749385747
-exact_match_ratio,0.5280431285500526
-subset_accuracy,0.5280431285500526
-zero_pred_ratio,0.2305252030491829
-mean_true_classes_per_pixel,1.007591962814331
-mean_pred_classes_per_pixel,0.7966424226760864
-mean_pixel_jaccard,0.5385471456994613
+hamming_loss,0.031780440360307693
+exact_match_ratio,0.5280064791440964
+subset_accuracy,0.5280064791440964
+zero_pred_ratio,0.2306169643998146
+mean_true_classes_per_pixel,1.0075914859771729
+mean_pred_classes_per_pixel,0.7965707778930664
+mean_pixel_jaccard,0.5385200930138428
