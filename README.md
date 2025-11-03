@@ -1,5 +1,5 @@
-# pucpr_pibit_semantic_segmentation
-PIBIT - Development of Semantic Segmentation for the MetaTwinSynth Project
+# pucpr_pibiti_semantic_segmentation
+PIBITI - Development of Semantic Segmentation for the MetaTwinSynth Project
 
 # First Steps
 Please follow these steps to use this tool.
