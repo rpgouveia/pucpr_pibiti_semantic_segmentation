@@ -29,6 +29,30 @@ This repository contains the implementation of semantic segmentation models for 
 
 ---
 
+## 📑 Table of Contents
+
+- [Repository Structure](#️-repository-structure)
+- [Getting Started](#-getting-started)
+  - [Prerequisites](#prerequisites)
+  - [Installation](#installation)
+  - [Configuration](#configuration)
+- [Dataset](#-dataset)
+- [Docker Setup (AMD GPU)](#-docker-setup-amd-gpu-with-rocm)
+- [Usage](#-usage)
+  - [Preprocessing Pipeline](#1-preprocessing-pipeline)
+  - [Model Training](#2-model-training)
+  - [Evaluation](#3-evaluation)
+- [Experimental Results](#-experimental-results)
+- [Citation](#-citation)
+- [Related Publications](#-related-publications)
+- [Contributing](#-contributing)
+- [Contact](#-contact)
+- [License](#-license)
+- [Acknowledgments](#-acknowledgments)
+- [Additional Resources](#-additional-resources)
+
+---
+
 ## 🗂️ Repository Structure
 
 ```
@@ -78,6 +102,8 @@ pucpr_pibiti_semantic_segmentation/
 - **Anaconda 3**: [Download Anaconda](https://www.anaconda.com/download)
 - **SYNTHUA-DT Dataset**: RGB images and semantic masks (see [Dataset](#-dataset) section)
 
+> **Note**: For AMD Radeon GPU users, see the [Docker Setup](#-docker-setup-amd-gpu-with-rocm) section for GPU-accelerated training.
+
 ### Installation
 
 1. **Clone the repository**:
@@ -97,6 +123,11 @@ pucpr_pibiti_semantic_segmentation/
    conda env create -f tf-cpu.yml
    conda activate tf-cpu
    ```
+
+> **Choosing between Conda and Docker:**
+> - **Conda** (`tf-cpu.yml`): Best for CPU-only training or NVIDIA GPUs with CUDA
+> - **Docker + ROCm**: Required for AMD Radeon GPU acceleration
+> - Both environments support the same training scripts and notebooks
 
 ### Configuration
 
@@ -140,6 +171,105 @@ The SYNTHUA-DT dataset was generated using Unreal Engine 5.1 and contains:
 
 For more details, see:
 - Luna-Romero, S.F., Abreu de Souza, M., & Serpa Andrade, L. (2025). "SYNTHUA-DT: a methodological framework for synthetic dataset generation and automatic annotation from digital twins in urban accessibility applications." *Technologies*, 13(8), 359.
+
+---
+
+## 🐳 Docker Setup (AMD GPU with ROCm)
+
+For users with AMD Radeon GPUs, Docker with ROCm provides GPU acceleration for TensorFlow training.
+
+### Prerequisites
+- AMD Radeon GPU with ROCm support
+- Docker installed and configured
+- ROCm drivers installed on host system
+
+### Pull the TensorFlow ROCm Image
+
+```bash
+docker pull rocm/tensorflow:latest
+```
+
+### Run the Container with GPU Access
+
+**Basic command** (without volume mounts):
+```bash
+docker run -it --network=host --device=/dev/kfd --device=/dev/dri \
+  --ipc=host --shm-size 16G --group-add video --cap-add=SYS_PTRACE \
+  --security-opt seccomp=unconfined rocm/tensorflow:latest
+```
+
+**With project directories mounted**:
+```bash
+docker run -it --network=host --device=/dev/kfd --device=/dev/dri \
+  --ipc=host --shm-size 16G --group-add video --cap-add=SYS_PTRACE \
+  --security-opt seccomp=unconfined \
+  -v /path/to/pucpr_pibit_semantic_segmentation:/workspace \
+  -v /path/to/NumpyFiles:/data/numpy \
+  -v /path/to/Images:/data/images \
+  rocm/tensorflow:latest
+```
+
+**Parameters explained**:
+- `--device=/dev/kfd --device=/dev/dri`: GPU device access
+- `--shm-size 16G`: Shared memory for data loading
+- `--group-add video`: Video group permissions
+- `-v <host_path>:<container_path>`: Mount directories from host to container
+
+### Setup Jupyter Notebook in Container
+
+Once inside the container, install Jupyter and required packages:
+
+```bash
+# Install Jupyter and dependencies
+pip install jupyter ipykernel matplotlib python-dotenv seaborn scikit-learn
+
+# Register the kernel
+python -m ipykernel install --name tf-docker
+
+# Verify kernel installation
+jupyter kernelspec list
+```
+
+### Launch Jupyter Notebook
+
+```bash
+# Navigate to workspace
+cd /workspace
+
+# Start Jupyter server
+jupyter notebook --ip=0.0.0.0 --port=8888 --no-browser --allow-root
+```
+
+The terminal will display an access URL like:
+```
+http://127.0.0.1:8888/tree?token=YOUR_GENERATED_TOKEN_HERE
+```
+
+Copy this URL to your browser to access Jupyter Notebook with GPU acceleration.
+
+### Verify GPU Access
+
+In a Jupyter notebook, run:
+```python
+import tensorflow as tf
+print("Num GPUs Available: ", len(tf.config.list_physical_devices('GPU')))
+print(tf.config.list_physical_devices('GPU'))
+```
+
+### Troubleshooting
+
+**GPU not detected?**
+1. Verify ROCm installation on host: `rocm-smi`
+2. Check Docker has access to GPU devices: `ls -la /dev/kfd /dev/dri`
+3. Ensure your GPU is supported by ROCm: [ROCm GPU Support](https://rocm.docs.amd.com/en/latest/release/gpu_os_support.html)
+
+**Out of memory errors?**
+- Reduce batch size in training scripts
+- Increase `--shm-size` parameter (e.g., `--shm-size 32G`)
+
+**Jupyter connection issues?**
+- Ensure port 8888 is not blocked by firewall
+- Try using `--ip=127.0.0.1` instead of `0.0.0.0`
 
 ---
 
@@ -299,6 +429,9 @@ Contributions are welcome! Please feel free to submit a Pull Request or open an 
 
 **Santiago Felipe Luna Romero**  
 - Email: [santiago.romero@pucpr.br](mailto:santiago.romero@pucpr.br)
+
+**Renato Pestana de Gouveia**
+- Email: [gouveia.renato@pucpr.edu.br](mailto:gouveia.renato@pucpr.edu.br)
 - GitHub: [@rpgouveia](https://github.com/rpgouveia)
 
 **Mauren Abreu de Souza**  
@@ -317,6 +450,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - **PUCPR** (Pontifícia Universidade Católica do Paraná) for institutional support
 - **PIBITI** program for funding this research
 - **SYNTHUA-DT** dataset generation team
+- **AMD ROCm** for GPU acceleration support on AMD Radeon hardware
 - All contributors and reviewers
 
 ---
@@ -324,6 +458,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## 📚 Additional Resources
 
 - **Unreal Engine 5.1**: [https://www.unrealengine.com/](https://www.unrealengine.com/)
+- **AMD ROCm Platform**: [https://www.amd.com/en/products/software/rocm.html](https://www.amd.com/en/products/software/rocm.html)
+- **ROCm TensorFlow Docker**: [https://hub.docker.com/r/rocm/tensorflow](https://hub.docker.com/r/rocm/tensorflow)
 - **DeepLabv3+ paper**: Chen et al. (2018). "Encoder-decoder with atrous separable convolution for semantic image segmentation"
 - **U-Net paper**: Ronneberger et al. (2015). "U-Net: convolutional networks for biomedical image segmentation"
 
