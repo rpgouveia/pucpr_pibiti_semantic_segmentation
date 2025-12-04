@@ -81,7 +81,7 @@ pucpr_pibiti_semantic_segmentation/
 ├── logs_tversky_v5/                # Training logs: Tversky loss v5
 │
 ├── results_unet_multilabel/        # U-Net baseline results
-├── master_class/                   # Final model implementations
+├── master_class/                   # Lessons on tensorflow
 │
 ├── main.py                         # Main preprocessing script
 ├── environment.yml                 # Conda environment (OpenCV)
