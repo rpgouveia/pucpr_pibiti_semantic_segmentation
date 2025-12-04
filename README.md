@@ -66,7 +66,6 @@ pucpr_pibiti_semantic_segmentation/
 │   └── validation.py               # Pipeline validation tools
 │
 ├── tools/                          # Additional tools and scripts
-│   └── .env.example                # Environment variables template
 │
 ├── deprecated/                     # Legacy code (archived)
 │
