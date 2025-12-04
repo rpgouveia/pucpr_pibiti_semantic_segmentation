@@ -5,6 +5,8 @@
 [![OpenCV](https://img.shields.io/badge/OpenCV-4.10.0-green.svg)](https://opencv.org/)
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
+> **📦 [Download SYNTHUA-DT Dataset & Pre-trained Models](https://drive.google.com/drive/folders/1wtsDoDf8kb-G17mdhTwbvgobPc2SXmkR?usp=sharing)**
+
 ## 📖 Overview
 
 This repository contains the implementation of semantic segmentation models for urban accessibility applications, focusing on the detection of mobility devices and accessibility infrastructure. The work is based on the research paper:
@@ -37,6 +39,7 @@ This repository contains the implementation of semantic segmentation models for 
   - [Installation](#installation)
   - [Configuration](#configuration)
 - [Dataset](#-dataset)
+- [Quick Start (Pre-trained Model)](#-quick-start-inference-with-pre-trained-model)
 - [Docker Setup (AMD GPU)](#-docker-setup-amd-gpu-with-rocm)
 - [Usage](#-usage)
   - [Preprocessing Pipeline](#1-preprocessing-pipeline)
@@ -99,7 +102,7 @@ pucpr_pibiti_semantic_segmentation/
 
 - **Python 3.12.4+**: [Download Python](https://www.python.org/downloads/)
 - **Anaconda 3**: [Download Anaconda](https://www.anaconda.com/download)
-- **SYNTHUA-DT Dataset**: RGB images and semantic masks (see [Dataset](#-dataset) section)
+- **SYNTHUA-DT Dataset**: Download from [Google Drive](https://drive.google.com/drive/folders/1wtsDoDf8kb-G17mdhTwbvgobPc2SXmkR?usp=sharing)
 
 > **Note**: For AMD Radeon GPU users, see the [Docker Setup](#-docker-setup-amd-gpu-with-rocm) section for GPU-accelerated training.
 
@@ -156,6 +159,27 @@ The SYNTHUA-DT dataset was generated using Unreal Engine 5.1 and contains:
 - **Domain randomization**: Varied illumination, weather, camera parameters, and textures
 - **Focus on accessibility**: Multiple mobility device categories and sidewalk-level infrastructure
 
+### 📥 Download Dataset and Pre-trained Models
+
+**Google Drive**: [SYNTHUA-DT Dataset & Models](https://drive.google.com/drive/folders/1wtsDoDf8kb-G17mdhTwbvgobPc2SXmkR?usp=sharing)
+
+**Available resources**:
+- RGB images (original 1920×1080 resolution)
+- Semantic masks (color-coded PNG format)
+- Preprocessed NumPy tensors (512×512×22)
+- Pre-trained DeepLabv3+ model weights (`.h5` format)
+- Training logs and evaluation metrics
+
+**Recommended folder structure** after download:
+```
+your_data_directory/
+├── RGB_Images/          # Original RGB images
+├── Semantic_Masks/      # Color-coded semantic masks
+├── NumPy_Tensors/       # Preprocessed 22-channel tensors
+└── Models/              # Pre-trained model weights
+    └── deeplabv3plus_best.h5
+```
+
 #### Semantic Classes (22 total)
 
 | Category | Classes |
@@ -170,6 +194,8 @@ The SYNTHUA-DT dataset was generated using Unreal Engine 5.1 and contains:
 
 For more details, see:
 - Luna-Romero, S.F., Abreu de Souza, M., & Serpa Andrade, L. (2025). "SYNTHUA-DT: a methodological framework for synthetic dataset generation and automatic annotation from digital twins in urban accessibility applications." *Technologies*, 13(8), 359.
+
+> **📝 Dataset Usage**: If you use the SYNTHUA-DT dataset in your research, please cite both the dataset paper (above) and the main segmentation paper (see [Citation](#-citation) section).
 
 ---
 
@@ -272,6 +298,45 @@ print(tf.config.list_physical_devices('GPU'))
 
 ---
 
+## ⚡ Quick Start (Inference with Pre-trained Model)
+
+Want to test the model immediately? Follow these steps:
+
+1. **Download the pre-trained model**:
+   - Get `deeplabv3plus_best.h5` from [Google Drive](https://drive.google.com/drive/folders/1wtsDoDf8kb-G17mdhTwbvgobPc2SXmkR?usp=sharing)
+
+2. **Install dependencies**:
+   ```bash
+   conda env create -f tf-cpu.yml
+   conda activate tf-cpu
+   ```
+
+3. **Run inference**:
+   ```python
+   import tensorflow as tf
+   import numpy as np
+   import cv2
+   
+   # Load model
+   model = tf.keras.models.load_model('deeplabv3plus_best.h5')
+   
+   # Load and preprocess image
+   img = cv2.imread('your_image.jpg')
+   img = cv2.resize(img, (512, 512))
+   img = img / 255.0
+   img = np.expand_dims(img, axis=0)
+   
+   # Predict
+   predictions = model.predict(img)
+   segmentation_map = np.argmax(predictions[0], axis=-1)
+   
+   # Visualize
+   cv2.imshow('Segmentation', segmentation_map.astype(np.uint8) * 10)
+   cv2.waitKey(0)
+   ```
+
+---
+
 ## 🔧 Usage
 
 ### 1. Preprocessing Pipeline
@@ -310,9 +375,32 @@ Training scripts are located in the `master_class/` and `study_tf_models/` direc
 conda activate tf-cpu
 ```
 
-**Train DeepLabv3+ with BCE-Dice loss**:
+**Option A: Train from scratch**
+
+Train DeepLabv3+ with BCE-Dice loss:
 ```bash
 python master_class/train_deeplabv3plus.py --loss bce_dice --epochs 100 --batch_size 8
+```
+
+**Option B: Use pre-trained model**
+
+Download the pre-trained DeepLabv3+ model from [Google Drive](https://drive.google.com/drive/folders/1wtsDoDf8kb-G17mdhTwbvgobPc2SXmkR?usp=sharing) and load it:
+
+```python
+import tensorflow as tf
+
+# Load pre-trained model
+model = tf.keras.models.load_model('path/to/deeplabv3plus_best.h5')
+
+# Fine-tune on your data
+model.compile(
+    optimizer='adam',
+    loss='categorical_crossentropy',
+    metrics=['accuracy']
+)
+
+# Continue training
+model.fit(train_dataset, validation_data=val_dataset, epochs=50)
 ```
 
 **Available loss functions**:
